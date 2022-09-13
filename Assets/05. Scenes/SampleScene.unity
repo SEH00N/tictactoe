@@ -1359,9 +1359,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1381068149}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: RestartGame
+      - m_Target: {fileID: 1381068151}
+        m_TargetAssemblyTypeName: Client, Assembly-CSharp
+        m_MethodName: QuitRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2510,6 +2510,7 @@ MonoBehaviour:
   inactivePlayerColor:
     panelColor: {r: 1, g: 1, b: 1, a: 1}
     textColor: {r: 0, g: 0, b: 0, a: 1}
+  textInfo: {fileID: 0}
 --- !u!4 &1381068150
 Transform:
   m_ObjectHideFlags: 0
