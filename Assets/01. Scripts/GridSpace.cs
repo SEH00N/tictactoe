@@ -17,14 +17,19 @@ public class GridSpace : MonoBehaviour
 
     public void SetSpace(bool _isSend = true)
     {
-        tmp.text = gameController.GetPlayerSide();
-        button.interactable = false;
-        gameController.EndTurn();
-        Client.Instance.blockPanel.SetActive(true);
-
-        if(_isSend)
+        if(gameController.isPlayerMove)
         {
-            Client.Instance.SendMessages("game", "setted", Array.IndexOf(gameController.tmps, tmp).ToString());
+            tmp.text = gameController.GetPlayerSide();
+            button.interactable = false;
+            Client.Instance.blockPanel.SetActive(true);
+            gameController.EndTurn();
+
+            if(_isSend)
+            {
+                Client.Instance.noticeTMP.text = "OtherTurn";
+                Client.Instance.SendMessages("game", "setted", Array.IndexOf(gameController.tmps, tmp).ToString());
+            }
         }
+
     }
 }
