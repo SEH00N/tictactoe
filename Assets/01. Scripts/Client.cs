@@ -24,7 +24,8 @@ public class Client : MonoBehaviour
     public static Client Instance = null;
 
     [SerializeField] string IP = "localhost", PORT = "3031";
-    [SerializeField] TextMeshProUGUI codeTMP = null, noticeTMP = null;
+    [SerializeField] TextMeshProUGUI codeTMP = null;
+    public TextMeshProUGUI noticeTMP = null;
     [SerializeField] GameObject watingPanel = null;
     public GameObject blockPanel = null;
     [SerializeField] GameController gameController = null;
@@ -75,6 +76,11 @@ public class Client : MonoBehaviour
                     blockPanel.SetActive(true);
                 });
                 break;
+            case "quitRes":
+                actions.Enqueue(() => {
+                    gameController.RestartGame();
+                });
+                break;
             case "joined":
                 actions.Enqueue(() => {
                     watingPanel.SetActive(false);
@@ -118,6 +124,11 @@ public class Client : MonoBehaviour
     public void JoinRoom(TMP_InputField _inputField)
     {
         SendMessages("room", "joinReq", _inputField.text);
+    }
+
+    public void QuitRoom()
+    {
+        SendMessages("room", "quitReq", "");
     }
 
     public void SendMessages(string _locate, string _type, string _value)

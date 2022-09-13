@@ -36,6 +36,15 @@ const roomData = (client, packet) => {
         case 'joinReq':
             room.join(packet, client);
             break;
+        case 'quitReq':
+            room.room[client.room] = undefined;
+            client.room = null;
+            client.send(JSON.stringify({
+                l : 'room',
+                t : 'quitRes',
+                v : ""
+            }));
+            break;
     }
 }
 

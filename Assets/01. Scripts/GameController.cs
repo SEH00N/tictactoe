@@ -23,8 +23,8 @@ public class GameController : MonoBehaviour
     public GameObject gameOverPanel = null;
     public TextMeshProUGUI gameOverTMP = null;
     private string playerSide = "";
-    private int moveCount = 0;
 
+    private int moveCount = 0;
     public Player playerX;
     public Player playerO;
     public PlayerColor activePlayercolor;
@@ -49,9 +49,12 @@ public class GameController : MonoBehaviour
         }
     }
 
-    partial void StartGame()
+    private void StartGame()
     {
-        textInfo.SetActive(false);
+        textInfo.gameObject.SetActive(false);
+        moveCount = 0;
+        SetBoardInteractable(false);
+        SetPlayerButtons(false);
     }
 
     public void SetStartingSide(string startingSide)
@@ -71,6 +74,7 @@ public class GameController : MonoBehaviour
     public void ChangeSides()
     {
         playerSide = playerSide == "X" ? "O" : "X";
+
         if(playerSide == "X")
             SetPlayerColors(playerX, playerO);
         else
@@ -93,6 +97,7 @@ public class GameController : MonoBehaviour
         if(CheckMatch())
         {
             GameOver();
+            Client.Instance.blockPanel.SetActive(false);
         }
 
         if(moveCount >= 9)
@@ -120,8 +125,7 @@ public class GameController : MonoBehaviour
 
     private void GameOver()
     {
-        for(int i = 0 ; i < tmps.Length; i ++)
-            tmps[i].GetComponentInParent<Button>().interactable = false;
+        SetBoardInteractable(false);
 
         gameOverPanel.SetActive(true);
         gameOverTMP.text = playerSide + "  WINS!";
@@ -132,14 +136,27 @@ public class GameController : MonoBehaviour
         playerSide = "X";
         moveCount = 0;
         gameOverPanel.SetActive(false);
+        
+        SetPlayerButtons(false);
+        SetBoardInteractable(false);
+
 
         SetPlayerColors(playerX, playerO);
         for(int i = 0; i < tmps.Length; i++)
-        {
             tmps[i].text = "";
-            tmps[i].GetComponentInParent<Button>().interactable = true;
-        }
 
         Client.Instance.Reset();
+    }
+
+    public void SetBoardInteractable(bool _toggle)
+    {
+        for(int i = 0; i < tmps.Length; i++)
+            tmps[i].GetComponentInParent<Button>().interactable = _toggle;
+    }
+
+    public void SetPlayerButtons(bool _toggle)
+    {
+        playerX.button.interactable = _toggle;
+        playerO.button.interactable = _toggle;
     }
 }

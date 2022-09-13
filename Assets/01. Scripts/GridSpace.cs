@@ -18,9 +18,9 @@ public class GridSpace : MonoBehaviour
     public void SetSpace(bool _isSend = true)
     {
         tmp.text = gameController.GetPlayerSide();
+        Client.Instance.blockPanel.SetActive(true);
         button.interactable = false;
         gameController.EndTurn();
-        Client.Instance.blockPanel.SetActive(true);
 
         if(_isSend)
         {
